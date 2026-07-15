@@ -1,18 +1,17 @@
 import json
 
 
-def salvar_dados(biblioteca):
+def salvar_dados(biblioteca: list):
     with open('biblioteca.json', 'w', encoding='utf-8') as arquivo:
         json.dump(biblioteca, arquivo, indent=4, ensure_ascii=False)
 
 
-def carregar_dados():
+def carregar_dados() -> list: 
     try:
         with open('biblioteca.json', 'r', encoding='utf-8') as arquivo:
             return json.load(arquivo)
     except FileNotFoundError:
         return []
-
 
 def linha(tam=40):
     print('=' * tam)
