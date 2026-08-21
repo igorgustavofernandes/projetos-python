@@ -1,34 +1,112 @@
 from funcoes import *
+from funcoes_banco import *
+from database import *
 
-biblioteca = carregar_dados()
+
+#livros = listar_livros()
+#for livro in livros:
+    #linha()
+    #print(f"ID: {livro['id']}")
+    #print(f"TÍTULO: {livro['titulo']}")
+    #print(f"AUTOR: {livro['autor']}")
+    #print(f"ANO DE LANÇAMENTO: {livro['ano_lancamento']}")
+    #print(f"GÊNERO: {livro['genero']}")
+
+
+
+
+#cliente = buscar_cliente(6)
+#if cliente:
+    #linha()
+    #print(f'ID: {cliente["id"]}')
+    #print(f'NOME: {cliente["nome"]}')
+    #print(f'EMAIL: {cliente["email"]}')
+    #linha()
+#else:
+    #print('Cliente não encontrado')
+
+#nome = input('Digite o nome do cliente que deseja encontrar: ')
+##linha()
+#if clientes:
+    #for cliente in clientes:
+        #print(f'Nome: {cliente["nome"]}')
+        #linha()
+#else:
+    #print('Nenhum cliente foi encontrado!')
+    #linha()
 
 while True:
-    menu()
+    linha()
+    print('SISTEMA DE BIBLIOTECA')
+    linha()
+    print(" 1 - Listar clientes")
+    print(" 2 - Buscar cliente")
+    print(" 3 - Cadastrar cliente")
+    print(" 4 - Atualizar telefone")
+    print(" 5 - Excluir cliente")
+    print(" 0 - Sair")
 
-    opc = leia_opcao('Digite uma opção: ', 1, 7)
+    try:
+        opc = int(input('Digite uma opção: '))
+    except ValueError:
+        print('Digite uma opção válida')
 
+    
     if opc == 1:
-        cadastro(biblioteca)
-        salvar_dados(biblioteca)
+        clientes = listar_clientes()
+        for cliente in clientes:
+            linha()
+            print(f"ID: {cliente['id']}")
+            print(f"Nome: {cliente['nome']}")
+            print(f"Email: {cliente['email']}")
 
     elif opc == 2:
-        listagem(biblioteca)
+        id_cliente = pedir_id()
+        cliente = buscar_cliente(id_cliente)
+        if cliente:
+            linha()
+            print(f'ID: {cliente["id"]}')
+            print(f'NOME: {cliente["nome"]}')
+            print(f'EMAIL: {cliente["email"]}')
+            linha()
+        else:
+            print('Cliente não encontrado')
+
 
     elif opc == 3:
-        pesquisa(biblioteca)
+        nome = input('Digite o nome: ')
+        cpf = input('Digite o cpf: ')
+        nacionalidade = input('Digite a nacionalidade: ')
+        email = input('Digite o email: ')
+        telefone = input('Digite o telefone: ')
+        data_nascimento = input('Digite a data de nascimento [yyyy-mm-dd]: ')
+
+        cadastrar_cliente (
+        nome=nome,
+        cpf=cpf,
+        nacionalidade=nacionalidade,
+        email=email,
+        telefone=telefone,
+        data_nascimento=data_nascimento
+        )
+        print('Cliente cadastrado com sucesso! ')
 
     elif opc == 4:
-        emprestimo(biblioteca)
-        salvar_dados(biblioteca)
+        telefone = input('Digite o novo número: ')
+        id_cliente = pedir_id()
+
+        atualizar_telefone(
+        novo_telefone= telefone,
+        id=id_cliente
+    )
+        print('Telefone atualizado com sucesso! ')
 
     elif opc == 5:
-        devolucao(biblioteca)
-        salvar_dados(biblioteca)
+        id_cliente = pedir_id()
+        excluir_cliente(
+        id=id_cliente
+    )
 
-    elif opc == 6:
-        remocao(biblioteca)
-        salvar_dados(biblioteca)
-
-    elif opc == 7:
+    elif opc == 0:
+        print('Você desejou encerrar')
         break
-

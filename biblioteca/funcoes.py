@@ -1,3 +1,4 @@
+
 import json
 
 
@@ -175,3 +176,4 @@ def remocao(biblioteca):
             break
     if not achou:
         print('Livro não encontrado.')
+
