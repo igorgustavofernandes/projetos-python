@@ -46,11 +46,8 @@ while True:
     print(" 5 - Excluir cliente")
     print(" 0 - Sair")
 
-    try:
-        opc = int(input('Digite uma opção: '))
-    except ValueError:
-        print('Digite uma opção válida')
-
+    
+    opc = pedir_opc_valida()
     
     if opc == 1:
         clientes = listar_clientes()
@@ -61,18 +58,37 @@ while True:
             print(f"Email: {cliente['email']}")
 
     elif opc == 2:
-        id_cliente = pedir_id()
-        cliente = buscar_cliente(id_cliente)
-        if cliente:
-            linha()
-            print(f'ID: {cliente["id"]}')
-            print(f'NOME: {cliente["nome"]}')
-            print(f'EMAIL: {cliente["email"]}')
-            linha()
-        else:
-            print('Cliente não encontrado')
-
-
+        linha()
+        print("1 - Buscar por id")
+        print("2 - Buscar por nome")
+        linha()
+        escolha = pedir_opc_valida()
+        if escolha == 1:
+            id_cliente = pedir_id()
+            cliente = buscar_cliente(id_cliente)
+            if cliente:
+                linha()
+                print(f'ID: {cliente["id"]}')
+                print(f'NOME: {cliente["nome"]}')
+                print(f'EMAIL: {cliente["email"]}')
+                linha()
+            else:
+                print('Cliente não encontrado')
+        elif escolha == 2:
+            nome = input("Digite o nome do cliente: ")
+            clientes = buscar_clientes_por_nome(nome)
+            if clientes:
+                for cliente in clientes:
+                    linha()
+                    print(f'ID: {cliente["id"]}')
+                    print(f'NOME: {cliente["nome"]}')
+                    print(f'EMAIL: {cliente["email"]}')
+                    linha()
+            else:
+                linha()
+                print("Cliente não encontrado")
+                linha()
+        
     elif opc == 3:
         nome = input('Digite o nome: ')
         cpf = input('Digite o cpf: ')
@@ -95,18 +111,26 @@ while True:
         telefone = input('Digite o novo número: ')
         id_cliente = pedir_id()
 
-        atualizar_telefone(
-        novo_telefone= telefone,
-        id=id_cliente
-    )
-        print('Telefone atualizado com sucesso! ')
+        sucesso = atualizar_telefone(
+            novo_telefone= telefone,
+            id=id_cliente
+        )
+        if sucesso:
+            print('Telefone atualizado com sucesso! ')
+        else:
+            print('ID não encontrado')
+    
 
     elif opc == 5:
         id_cliente = pedir_id()
-        excluir_cliente(
+        sucesso = excluir_cliente(
         id=id_cliente
     )
-
+        if sucesso:
+            print('Cliente excluido com sucesso! ')
+        else:
+            print('ID não encontrado. ')
+            
     elif opc == 0:
         print('Você desejou encerrar')
         break

@@ -53,8 +53,10 @@ def cadastrar_cliente(nome, cpf, nacionalidade, email, telefone, data_nascimento
     try:
         cursor.execute(sql, valores)
         conexao.commit()
+        return True
     except mysql.connector.Error:
-        print('Erro ao executar a operação no Banco de Dados')
+        print("Erro ao executar a operação no Banco de Dados")
+        return False
     finally:
         cursor.close()
         conexao.close()
@@ -97,7 +99,7 @@ def excluir_cliente(id):
         else:
             return False
     except mysql.connector.Error:
-            print('Erro ao executar a operação no Banco de Dados')
+            print("Erro ao executar a operação no Banco de Dados")
     finally:
         cursor.close()
         conexao.close()
@@ -105,6 +107,7 @@ def excluir_cliente(id):
 def buscar_cliente(id):
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
+    cliente = None
     sql = (
     "SELECT * FROM clientes WHERE id = %s"
     )
@@ -123,9 +126,10 @@ def buscar_clientes_por_nome(nome):
     conexao = conectar()
     cursor = conexao.cursor(dictionary=True)
     sql = (
-        "SELECT nome FROM clientes WHERE nome like %s"
+        "SELECT * FROM clientes WHERE nome like %s"
     )
     valor = (f'%{nome}%',)
+    clientes = []
     try:
         cursor.execute(sql, valor)
         clientes = cursor.fetchall()
@@ -143,4 +147,12 @@ def pedir_id():
             return id
         except ValueError:
             print('Tente novamente um id válido: ')
-    
+
+def pedir_opc_valida():
+    while True:
+        try:
+            opc = int(input('Digite sua opção: '))
+            return opc
+        except ValueError:
+            print('Tente novamente uma opção válida: ')
+            
