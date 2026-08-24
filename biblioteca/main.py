@@ -96,16 +96,22 @@ while True:
         email = input('Digite o email: ')
         telefone = input('Digite o telefone: ')
         data_nascimento = input('Digite a data de nascimento [yyyy-mm-dd]: ')
-
-        cadastrar_cliente (
-        nome=nome,
-        cpf=cpf,
-        nacionalidade=nacionalidade,
-        email=email,
-        telefone=telefone,
-        data_nascimento=data_nascimento
-        )
-        print('Cliente cadastrado com sucesso! ')
+        cliente = buscar_cliente_por_cpf(cpf)
+        if cliente:
+            print("Esse CPF já está cadastrado!")
+        else:
+            sucesso = cadastrar_cliente (
+                nome=nome,
+                cpf=cpf,
+                nacionalidade=nacionalidade,
+                email=email,
+                telefone=telefone,
+                data_nascimento=data_nascimento
+                )
+            if sucesso:
+                print("Cliente cadastrado com sucesso!")
+            else:
+                print('Não foi possível cadastrar o cliente!')
 
     elif opc == 4:
         telefone = input('Digite o novo número: ')

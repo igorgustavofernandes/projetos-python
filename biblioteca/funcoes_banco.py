@@ -155,4 +155,21 @@ def pedir_opc_valida():
             return opc
         except ValueError:
             print('Tente novamente uma opção válida: ')
-            
+
+def buscar_cliente_por_cpf(cpf):
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    cliente = None
+    sql = (
+        "SELECT * FROM clientes WHERE cpf = %s"
+        )
+    valor = (cpf,)
+    try:
+        cursor.execute(sql, valor)
+        cliente = cursor.fetchone()
+    except  mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+    finally:
+        cursor.close()
+        conexao.close()
+    return cliente
