@@ -98,7 +98,9 @@ while True:
         data_nascimento = input('Digite a data de nascimento [yyyy-mm-dd]: ')
         cliente = buscar_cliente_por_cpf(cpf)
         if cliente:
+            linha()
             print("Esse CPF já está cadastrado!")
+            linha()
         else:
             sucesso = cadastrar_cliente (
                 nome=nome,
@@ -108,10 +110,12 @@ while True:
                 telefone=telefone,
                 data_nascimento=data_nascimento
                 )
+            linha()
             if sucesso:
                 print("Cliente cadastrado com sucesso!")
             else:
                 print('Não foi possível cadastrar o cliente!')
+            linha()
 
     elif opc == 4:
         telefone = input('Digite o novo número: ')

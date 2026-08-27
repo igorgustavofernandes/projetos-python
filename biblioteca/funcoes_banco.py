@@ -173,3 +173,14 @@ def buscar_cliente_por_cpf(cpf):
         cursor.close()
         conexao.close()
     return cliente
+
+def pedir_cpf():
+    while True:
+        cpf = input('Digite o CPF: ')
+
+        if len(cpf) != 11:
+            print('O CPF precisa conter 11 dígitos.')
+        elif not cpf.isnumeric():
+            print('O CPF deve conter apenas números.')
+        else:
+            return cpf
