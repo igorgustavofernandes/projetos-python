@@ -12,9 +12,6 @@ from database import *
     #print(f"ANO DE LANÇAMENTO: {livro['ano_lancamento']}")
     #print(f"GÊNERO: {livro['genero']}")
 
-
-
-
 #cliente = buscar_cliente(6)
 #if cliente:
     #linha()
@@ -91,9 +88,9 @@ while True:
         
     elif opc == 3:
         nome = input('Digite o nome: ')
-        cpf = input('Digite o cpf: ')
+        cpf = pedir_cpf()
         nacionalidade = input('Digite a nacionalidade: ')
-        email = input('Digite o email: ')
+        email = pedir_email()
         telefone = input('Digite o telefone: ')
         data_nascimento = input('Digite a data de nascimento [yyyy-mm-dd]: ')
         cliente = buscar_cliente_por_cpf(cpf)

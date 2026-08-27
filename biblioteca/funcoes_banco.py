@@ -184,3 +184,23 @@ def pedir_cpf():
             print('O CPF deve conter apenas números.')
         else:
             return cpf
+
+def pedir_telefone():
+    while True:
+        telefone = input('Digite o telefone: ')
+
+        if len(telefone) != 11:
+            print('O telefone precisa conter 11 dígitos.')
+        elif not telefone.isnumeric():
+            print('O telefone deve conter apenas números.')
+        else:
+            return telefone
+
+def pedir_email():
+    while True:
+        email = input('Digite o email: ')
+
+        if ' ' not in email and '@' in email and '.' in email:
+            return email
+        else:
+            print('Email inválido')
