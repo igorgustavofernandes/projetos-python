@@ -1,5 +1,6 @@
 from database import *
 import mysql.connector
+from datetime import datetime
 
 def listar_clientes():
     conexao = conectar()
@@ -204,3 +205,14 @@ def pedir_email():
             return email
         else:
             print('Email inválido')
+            
+def pedir_data_nascimento():
+    while True:
+        data = input("Digite uma data [yyyy-mm-dd]: ")
+
+        try:
+            datetime.strptime(data, "%Y-%m-%d")
+            return data
+
+        except ValueError:
+            print("Data inválida. Tente novamente.")

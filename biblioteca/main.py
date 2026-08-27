@@ -91,8 +91,8 @@ while True:
         cpf = pedir_cpf()
         nacionalidade = input('Digite a nacionalidade: ')
         email = pedir_email()
-        telefone = input('Digite o telefone: ')
-        data_nascimento = input('Digite a data de nascimento [yyyy-mm-dd]: ')
+        telefone = pedir_telefone()
+        data_nascimento = pedir_data_nascimento()
         cliente = buscar_cliente_por_cpf(cpf)
         if cliente:
             linha()
