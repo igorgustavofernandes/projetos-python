@@ -34,15 +34,17 @@ from database import *
 
 while True:
     linha()
-    print('SISTEMA DE BIBLIOTECA')
-    linha()
-    print(" 1 - Listar clientes")
-    print(" 2 - Buscar cliente")
-    print(" 3 - Cadastrar cliente")
-    print(" 4 - Atualizar telefone")
-    print(" 5 - Excluir cliente")
-    print(" 0 - Sair")
-
+    print('''
+    1 - Listar clientes
+    2 - Buscar cliente
+    3 - Cadastrar cliente
+    4 - Atualizar telefone
+    5 - Excluir cliente
+    6 - Cadastrar autor
+    7 - Cadastrar livro
+    8 - Cadastrar empréstimo
+    0 - Sair
+    ''')
     
     opc = pedir_opc_valida()
     
@@ -137,7 +139,79 @@ while True:
             print('Cliente excluido com sucesso! ')
         else:
             print('ID não encontrado. ')
-            
+
+        titulo = input('Digite o título do livro: ')
+        autor_id = pedir_id()
+        ano_lancamento = int(input('Digite o ano de lançamento: '))
+        genero = input('Digite o gênero: ')
+
+        sucesso = cadastrar_livro(
+            titulo=titulo,
+            autor_id=autor_id,
+            ano_lancamento=ano_lancamento,
+            genero=genero
+        )
+
+        if sucesso:
+            print('Livro cadastrado com sucesso!')
+        else:
+            print('Não foi possível cadastrar o livro!')
+
+    elif opc == 6:
+        nome = input('Digite o nome do autor: ')
+        data_nascimento = pedir_data_nascimento()
+        nacionalidade = input('Digite a nacionalidade: ')
+
+        sucesso = cadastrar_autor(
+            nome=nome,
+            data_nascimento=data_nascimento,
+            nacionalidade=nacionalidade
+        )
+
+        if sucesso:
+            print('Autor cadastrado com sucesso!')
+        else:
+            print('Não foi possível cadastrar o autor!')
+
+    elif opc == 7:
+        titulo = input('Digite o título do livro: ')
+        autor_id = pedir_id()
+        ano_lancamento = int(input('Digite o ano de lançamento: '))
+        genero = input('Digite o gênero: ')
+
+        sucesso = cadastrar_livro(
+            titulo=titulo,
+            autor_id=autor_id,
+            ano_lancamento=ano_lancamento,
+            genero=genero
+        )
+
+        if sucesso:
+            print('Livro cadastrado com sucesso!')
+        else:
+            print('Não foi possível cadastrar o livro!')
+
+    elif opc == 8:
+        livro_id = pedir_id()
+        cliente_id = pedir_id()
+        funcionario_id = pedir_id()
+        data_emprestimo = input('Digite a data do empréstimo [yyyy-mm-dd]: ')
+
+        sucesso = cadastrar_emprestimo(
+            livro_id=livro_id,
+            cliente_id=cliente_id,
+            funcionario_id=funcionario_id,
+            data_emprestimo=data_emprestimo
+        )
+
+        if sucesso:
+            print('Empréstimo cadastrado com sucesso!')
+        else:
+            print('Não foi possível cadastrar o empréstimo!')
+
     elif opc == 0:
-        print('Você desejou encerrar')
+        print('Encerrando o sistema...')
         break
+
+    else:
+        print('Opção inválida!')

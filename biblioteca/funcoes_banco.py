@@ -205,7 +205,7 @@ def excluir_cliente(id):
 
 
 # ==============================================================================
-# OPERAÇÕES DE LIVROS (LISTAR, BUSCAR)
+# OPERAÇÕES DE LIVROS (LISTAR, BUSCAR, CADASTRAR)
 # ==============================================================================
 
 def listar_livros():
@@ -225,6 +225,43 @@ def listar_livros():
         cursor.close()
         conexao.close()
     return livros
+
+def cadastrar_livro(titulo, autor_id, ano_lancamento, genero):
+
+    if buscar_autor(autor_id) is None:
+        print('Autor não encontrado em nosso sistema')
+        return False
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = ("""
+        INSERT INTO livros
+        (titulo, autor_id, ano_lancamento, genero)
+        VALUES
+        (%s, %s, %s, %s)
+    """)
+
+    valores = (
+        titulo,
+        autor_id,
+        ano_lancamento,
+        genero
+    )
+
+    try:
+        cursor.execute(sql, valores)
+        conexao.commit()
+        return True
+
+    except mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+        return False
+
+    finally:
+        cursor.close()
+        conexao.close()
+
 
 def buscar_livro(id):
     conexao = conectar()
@@ -267,3 +304,122 @@ def livro_esta_emprestado(id):
         cursor.close()
         conexao.close()
     return emprestimo
+
+
+# ==============================================================================
+# OPERAÇÕES DE FUNCIONÁRIOS (LISTAR, BUSCAR)
+# ==============================================================================
+
+def buscar_funcionario(id):
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    funcionario = None
+
+    sql = ("""
+        SELECT *
+        FROM funcionarios
+        WHERE id = %s
+    """)
+
+    valor = (id,)
+
+    try:
+        cursor.execute(sql, valor)
+        funcionario = cursor.fetchone()
+    except mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+    finally:
+        cursor.close()
+        conexao.close()
+
+    return funcionario
+
+# ==============================================================================
+# OPERAÇÕES DE EMPRESTIMOS (LISTAR, BUSCAR)
+# ==============================================================================
+
+def cadastrar_emprestimo(livro_id, cliente_id, funcionario_id, data_emprestimo):
+
+    if buscar_livro(livro_id) is None:
+        print('Livro não encontrado em nosso sistema')
+    else: 
+        if livro_esta_emprestado(livro_id) is not None:
+            print('Esse livro está emprestado atualmente')
+        else:
+            if buscar_cliente(cliente_id) is None:
+                print('Esse cliente não está cadastrado em nosso sistema')
+            else:
+                if buscar_funcionario(funcionario_id) is None:
+                    print('Funcionário inexistente')
+                else:
+                    conexao = conectar()
+                    cursor = conexao.cursor()
+                    sql = ("""
+                        INSERT INTO emprestimos (livro_id, cliente_id, funcionario_id, data_emprestimo)
+                        VALUES (%s, %s, %s, %s)
+                    """)
+                    valores = (livro_id, cliente_id,funcionario_id,data_emprestimo)
+                    try:
+                        cursor.execute(sql,valores)
+                        conexao.commit()
+                        return True
+                    except mysql.connector.Error:
+                        print('Erro ao executar a operação no Banco de Dados')
+                        return False
+                    finally:
+                        cursor.close()
+                        conexao.close()
+                        
+# ==============================================================================
+# OPERAÇÕES DE AUTOR (LISTAR, BUSCAR, CADASTRAR)
+# ==============================================================================
+
+def buscar_autor(id):
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    autor = None
+
+    sql = ("""
+        SELECT *
+        FROM autores
+        WHERE id = %s
+    """)
+
+    valor = (id,)
+
+    try:
+        cursor.execute(sql, valor)
+        autor = cursor.fetchone()
+    except mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+    finally:
+        cursor.close()
+        conexao.close()
+
+    return autor
+ 
+def cadastrar_autor(nome, data_nascimento, nacionalidade):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    sql = ("""
+    INSERT INTO autores
+    (nome, data_nascimento, nacionalidade)
+    VALUES
+    (%s ,%s ,%s)
+    """)
+    valores = (
+        nome, 
+        data_nascimento,
+        nacionalidade
+    )
+    try:
+        cursor.execute(sql, valores)
+        conexao.commit()
+        return True
+    except mysql.connector.Error:
+        print("Erro ao executar a operação no Banco de Dados")
+        return False
+    finally:
+        cursor.close()
+        conexao.close()
+    
