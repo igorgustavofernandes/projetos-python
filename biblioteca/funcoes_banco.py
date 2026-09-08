@@ -1,6 +1,6 @@
 from database import *
 import mysql.connector
-from datetime import datetime
+from datetime import datetime, date
 
 # ==============================================================================
 # FUNÇÕES AUXILIARES / ENTRADAS DO USUÁRIO (PEDIR)
@@ -342,33 +342,68 @@ def cadastrar_emprestimo(livro_id, cliente_id, funcionario_id, data_emprestimo):
 
     if buscar_livro(livro_id) is None:
         print('Livro não encontrado em nosso sistema')
-    else: 
-        if livro_esta_emprestado(livro_id) is not None:
-            print('Esse livro está emprestado atualmente')
-        else:
-            if buscar_cliente(cliente_id) is None:
-                print('Esse cliente não está cadastrado em nosso sistema')
-            else:
-                if buscar_funcionario(funcionario_id) is None:
-                    print('Funcionário inexistente')
-                else:
-                    conexao = conectar()
-                    cursor = conexao.cursor()
-                    sql = ("""
-                        INSERT INTO emprestimos (livro_id, cliente_id, funcionario_id, data_emprestimo)
-                        VALUES (%s, %s, %s, %s)
-                    """)
-                    valores = (livro_id, cliente_id,funcionario_id,data_emprestimo)
-                    try:
-                        cursor.execute(sql,valores)
-                        conexao.commit()
-                        return True
-                    except mysql.connector.Error:
-                        print('Erro ao executar a operação no Banco de Dados')
-                        return False
-                    finally:
-                        cursor.close()
-                        conexao.close()
+        return False
+
+    if livro_esta_emprestado(livro_id) is not None:
+        print('Esse livro está emprestado atualmente')
+        return False
+    
+    if buscar_cliente(cliente_id) is None:
+        print('Esse cliente não está cadastrado em nosso sistema')
+        return False
+
+    if buscar_funcionario(funcionario_id) is None:
+        print('Funcionário inexistente')
+        return False
+    conexao = conectar()
+    cursor = conexao.cursor()
+    sql = ("""
+    INSERT INTO emprestimos (livro_id, cliente_id, funcionario_id, data_emprestimo)
+    VALUES (%s, %s, %s, %s)
+    """)
+    valores = (livro_id, cliente_id,funcionario_id,data_emprestimo)
+    try:
+        cursor.execute(sql,valores)
+        conexao.commit()
+        return True
+    except mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+        return False
+    finally:
+        cursor.close()
+        conexao.close()
+
+import mysql.connector
+
+def devolver_livro(id_livro):
+    data = date.today()
+    if buscar_livro(id_livro) is None:
+        print('O livro não está cadastrado em nosso sistema.')
+        return False
+    if not livro_esta_emprestado(id_livro):
+        print('O livro não está emprestado atualmente.')
+        return False
+    conexao = conectar()
+    cursor = conexao.cursor()
+    sql = """
+    UPDATE emprestimos
+    SET data_devolutiva = %s
+    WHERE livro_id = %s AND data_devolutiva IS NULL
+    """
+    valores = (data, id_livro)
+    try:
+        cursor.execute(sql, valores)
+        conexao.commit()
+        if cursor.rowcount == 1:
+            return True
+        return False
+    except mysql.connector.Error:
+        print(f'Erro ao executar a operação no Banco de Dados')
+        return False
+    finally:
+        cursor.close()
+        conexao.close()
+
                         
 # ==============================================================================
 # OPERAÇÕES DE AUTOR (LISTAR, BUSCAR, CADASTRAR)

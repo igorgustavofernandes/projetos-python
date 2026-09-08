@@ -1,217 +1,226 @@
+from datetime import date
+from database import *
 from funcoes import *
 from funcoes_banco import *
-from database import *
-
-
-#livros = listar_livros()
-#for livro in livros:
-    #linha()
-    #print(f"ID: {livro['id']}")
-    #print(f"TÍTULO: {livro['titulo']}")
-    #print(f"AUTOR: {livro['autor']}")
-    #print(f"ANO DE LANÇAMENTO: {livro['ano_lancamento']}")
-    #print(f"GÊNERO: {livro['genero']}")
-
-#cliente = buscar_cliente(6)
-#if cliente:
-    #linha()
-    #print(f'ID: {cliente["id"]}')
-    #print(f'NOME: {cliente["nome"]}')
-    #print(f'EMAIL: {cliente["email"]}')
-    #linha()
-#else:
-    #print('Cliente não encontrado')
-
-#nome = input('Digite o nome do cliente que deseja encontrar: ')
-##linha()
-#if clientes:
-    #for cliente in clientes:
-        #print(f'Nome: {cliente["nome"]}')
-        #linha()
-#else:
-    #print('Nenhum cliente foi encontrado!')
-    #linha()
 
 while True:
-    linha()
-    print('''
-    1 - Listar clientes
-    2 - Buscar cliente
-    3 - Cadastrar cliente
-    4 - Atualizar telefone
-    5 - Excluir cliente
-    6 - Cadastrar autor
-    7 - Cadastrar livro
-    8 - Cadastrar empréstimo
-    0 - Sair
-    ''')
-    
-    opc = pedir_opc_valida()
-    
-    if opc == 1:
-        clientes = listar_clientes()
-        for cliente in clientes:
-            linha()
-            print(f"ID: {cliente['id']}")
-            print(f"Nome: {cliente['nome']}")
-            print(f"Email: {cliente['email']}")
 
+    print("=" * 45)
+    print("      SISTEMA DE GERENCIAMENTO DE BIBLIOTECA   ")
+    print("=" * 45)
+    print("""
+    [ 1 ] Listar clientes
+    [ 2 ] Buscar cliente
+    [ 3 ] Cadastrar cliente
+    [ 4 ] Atualizar telefone
+    [ 5 ] Excluir cliente
+    ---------------------------
+    [ 6 ] Cadastrar autor
+    [ 7 ] Cadastrar livro
+    ---------------------------
+    [ 8 ] Cadastrar empréstimo
+    [ 9 ] Devolver livro
+    ---------------------------
+    [ 0 ] Sair do Sistema
+    """)
+    linha()
+
+    opc = pedir_opc_valida()
+    linha()
+
+    # 1 - LISTAR CLIENTES
+    if opc == 1:
+        print("\n=== LISTA DE CLIENTES ===")
+        clientes = listar_clientes()
+        if clientes:
+            for cliente in clientes:
+                linha()
+                print(f"ID:    {cliente['id']}")
+                print(f"Nome:  {cliente['nome']}")
+                print(f"Email: {cliente['email']}")
+            linha()
+        else:
+            linha()
+            print("Nenhum cliente cadastrado.")
+            linha()
+
+    # 2 - BUSCAR CLIENTE
     elif opc == 2:
         linha()
-        print("1 - Buscar por id")
-        print("2 - Buscar por nome")
+        print("=== BUSCAR CLIENTE ===")
+        print("[ 1 ] Buscar por ID")
+        print("[ 2 ] Buscar por Nome")
         linha()
+        
         escolha = pedir_opc_valida()
+        
         if escolha == 1:
             id_cliente = pedir_id()
             cliente = buscar_cliente(id_cliente)
+            linha()
             if cliente:
-                linha()
-                print(f'ID: {cliente["id"]}')
-                print(f'NOME: {cliente["nome"]}')
-                print(f'EMAIL: {cliente["email"]}')
-                linha()
+                print(f"ID:    {cliente['id']}")
+                print(f"NOME:  {cliente['nome']}")
+                print(f"EMAIL: {cliente['email']}")
             else:
-                print('Cliente não encontrado')
+                print("Cliente não encontrado.")
+            linha()
+
         elif escolha == 2:
             nome = input("Digite o nome do cliente: ")
             clientes = buscar_clientes_por_nome(nome)
             if clientes:
                 for cliente in clientes:
                     linha()
-                    print(f'ID: {cliente["id"]}')
-                    print(f'NOME: {cliente["nome"]}')
-                    print(f'EMAIL: {cliente["email"]}')
-                    linha()
+                    print(f"ID:    {cliente['id']}")
+                    print(f"NOME:  {cliente['nome']}")
+                    print(f"EMAIL: {cliente['email']}")
+                linha()
             else:
                 linha()
-                print("Cliente não encontrado")
+                print("Cliente não encontrado.")
                 linha()
-        
+
+    # 3 - CADASTRAR CLIENTE
     elif opc == 3:
-        nome = input('Digite o nome: ')
+        print("\n=== CADASTRO DE CLIENTE ===")
+        nome = input("Digite o nome: ")
         cpf = pedir_cpf()
-        nacionalidade = input('Digite a nacionalidade: ')
+        nacionalidade = input("Digite a nacionalidade: ")
         email = pedir_email()
         telefone = pedir_telefone()
         data_nascimento = pedir_data_nascimento()
+
         cliente = buscar_cliente_por_cpf(cpf)
+        linha()
         if cliente:
-            linha()
-            print("Esse CPF já está cadastrado!")
-            linha()
+            print("Atenção: Esse CPF já está cadastrado!")
         else:
-            sucesso = cadastrar_cliente (
+            sucesso = cadastrar_cliente(
                 nome=nome,
                 cpf=cpf,
                 nacionalidade=nacionalidade,
                 email=email,
                 telefone=telefone,
-                data_nascimento=data_nascimento
-                )
-            linha()
+                data_nascimento=data_nascimento,
+            )
             if sucesso:
                 print("Cliente cadastrado com sucesso!")
             else:
-                print('Não foi possível cadastrar o cliente!')
-            linha()
+                print("Não foi possível cadastrar o cliente!")
+        linha()
 
+    # 4 - ATUALIZAR TELEFONE
     elif opc == 4:
-        telefone = input('Digite o novo número: ')
+        print("\n=== ATUALIZAÇÃO DE TELEFONE ===")
         id_cliente = pedir_id()
+        telefone = input("Digite o novo número: ")
 
-        sucesso = atualizar_telefone(
-            novo_telefone= telefone,
-            id=id_cliente
-        )
+        sucesso = atualizar_telefone(novo_telefone=telefone, id=id_cliente)
+        linha()
         if sucesso:
-            print('Telefone atualizado com sucesso! ')
+            print("Telefone atualizado com sucesso!")
         else:
-            print('ID não encontrado')
-    
+            print("ID não encontrado.")
+        linha()
 
+    # 5 - EXCLUIR CLIENTE
     elif opc == 5:
+        print("\n=== EXCLUSÃO DE CLIENTE ===")
         id_cliente = pedir_id()
-        sucesso = excluir_cliente(
-        id=id_cliente
-    )
+        sucesso = excluir_cliente(id=id_cliente)
+        
+        linha()
         if sucesso:
-            print('Cliente excluido com sucesso! ')
+            print("Cliente excluído com sucesso!")
         else:
-            print('ID não encontrado. ')
+            print("ID não encontrado.")
+        linha()
 
-        titulo = input('Digite o título do livro: ')
-        autor_id = pedir_id()
-        ano_lancamento = int(input('Digite o ano de lançamento: '))
-        genero = input('Digite o gênero: ')
-
-        sucesso = cadastrar_livro(
-            titulo=titulo,
-            autor_id=autor_id,
-            ano_lancamento=ano_lancamento,
-            genero=genero
-        )
-
-        if sucesso:
-            print('Livro cadastrado com sucesso!')
-        else:
-            print('Não foi possível cadastrar o livro!')
-
+    # 6 - CADASTRAR AUTOR
     elif opc == 6:
-        nome = input('Digite o nome do autor: ')
+        print("\n=== CADASTRO DE AUTOR ===")
+        nome = input("Digite o nome do autor: ")
         data_nascimento = pedir_data_nascimento()
-        nacionalidade = input('Digite a nacionalidade: ')
+        nacionalidade = input("Digite a nacionalidade: ")
 
         sucesso = cadastrar_autor(
             nome=nome,
             data_nascimento=data_nascimento,
-            nacionalidade=nacionalidade
+            nacionalidade=nacionalidade,
         )
 
+        linha()
         if sucesso:
-            print('Autor cadastrado com sucesso!')
+            print("Autor cadastrado com sucesso!")
         else:
-            print('Não foi possível cadastrar o autor!')
+            print("Não foi possível cadastrar o autor!")
+        linha()
 
+    # 7 - CADASTRAR LIVRO
     elif opc == 7:
-        titulo = input('Digite o título do livro: ')
+        print("\n=== CADASTRO DE LIVRO ===")
+        titulo = input("Digite o título do livro: ")
         autor_id = pedir_id()
-        ano_lancamento = int(input('Digite o ano de lançamento: '))
-        genero = input('Digite o gênero: ')
+        ano_lancamento = int(input("Digite o ano de lançamento: "))
+        genero = input("Digite o gênero: ")
 
         sucesso = cadastrar_livro(
             titulo=titulo,
             autor_id=autor_id,
             ano_lancamento=ano_lancamento,
-            genero=genero
+            genero=genero,
         )
 
+        linha()
         if sucesso:
-            print('Livro cadastrado com sucesso!')
+            print("Livro cadastrado com sucesso!")
         else:
-            print('Não foi possível cadastrar o livro!')
+            print("Não foi possível cadastrar o livro!")
+        linha()
 
+    # 8 - CADASTRAR EMPRÉSTIMO
     elif opc == 8:
+        print("\n=== REGISTRO DE EMPRÉSTIMO ===")
         livro_id = pedir_id()
         cliente_id = pedir_id()
         funcionario_id = pedir_id()
-        data_emprestimo = input('Digite a data do empréstimo [yyyy-mm-dd]: ')
+        data_emprestimo = input("Digite a data do empréstimo [yyyy-mm-dd]: ")
 
         sucesso = cadastrar_emprestimo(
             livro_id=livro_id,
             cliente_id=cliente_id,
             funcionario_id=funcionario_id,
-            data_emprestimo=data_emprestimo
+            data_emprestimo=data_emprestimo,
         )
 
+        linha()
         if sucesso:
-            print('Empréstimo cadastrado com sucesso!')
+            print("Empréstimo cadastrado com sucesso!")
         else:
-            print('Não foi possível cadastrar o empréstimo!')
+            print("Não foi possível cadastrar o empréstimo!")
+        linha()
 
+    # 9 - DEVOLVER LIVRO
+    elif opc == 9:
+        print("\n=== DEVOLUÇÃO DE LIVRO ===")
+        id_livro = int(input("Digite o ID do livro: "))
+        
+        linha()
+        if devolver_livro(id_livro):
+            print("Devolução confirmada com sucesso!")
+        else:
+            print("Devolução não efetivada.")
+        linha()
+
+    # 0 - SAIR
     elif opc == 0:
-        print('Encerrando o sistema...')
+        linha()
+        print("Encerrando o sistema... Até logo!")
+        linha()
         break
 
     else:
-        print('Opção inválida!')
+        linha()
+        print("Opção inválida! Tente novamente.")
+        linha()
