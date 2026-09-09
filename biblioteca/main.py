@@ -20,6 +20,7 @@ while True:
     ---------------------------
     [ 8 ] Cadastrar empréstimo
     [ 9 ] Devolver livro
+    [ 10 ] Listar emprestimos ativos
     ---------------------------
     [ 0 ] Sair do Sistema
     """)
@@ -212,6 +213,22 @@ while True:
         else:
             print("Devolução não efetivada.")
         linha()
+
+    # 10 - Listar emprestimos ativos 
+    elif opc == 10:
+        print("\n=== LISTA DE EMPRESTIMOS ATIVOS ===")
+        print()
+        emprestimos = listar_emprestimos_ativos()
+        if emprestimos:
+            for emprestimo_ativo in emprestimos:
+                print(f"ID Livro: {emprestimo_ativo['livro_id']}")
+                print(f"ID CLIENTE: {emprestimo_ativo['cliente_id']}")
+                print(f"DATA EMPRESTIMO: {emprestimo_ativo['data_emprestimo']}")
+                print(f"TÍTULO: {emprestimo_ativo['titulo']}")
+                print(f"CLIENTE: {emprestimo_ativo['cliente']}")
+                print("-" * 40)
+        else:
+            print('Não há nenhum emprestimo ativo nesse momento')
 
     # 0 - SAIR
     elif opc == 0:

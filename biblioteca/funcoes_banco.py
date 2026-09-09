@@ -457,4 +457,30 @@ def cadastrar_autor(nome, data_nascimento, nacionalidade):
     finally:
         cursor.close()
         conexao.close()
+
+def listar_emprestimos_ativos():
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    emprestimos_ativos = []
+    try:
+        cursor.execute ("""
+        SELECT emprestimos.livro_id,
+        emprestimos.cliente_id,
+        emprestimos.data_emprestimo,
+        livros.titulo,
+        clientes.nome AS cliente
+        FROM emprestimos
+        JOIN livros ON emprestimos.livro_id = livros.id
+        JOIN clientes ON emprestimos.cliente_id = clientes.id
+        WHERE emprestimos.data_devolutiva IS NULL;
+        """)
+        emprestimos_ativos = cursor.fetchall()
+    except mysql.connector.Error:
+        print("Erro ao executar a operação no Banco de Dados")
+    finally:
+        cursor.close()
+        conexao.close()
+    return emprestimos_ativos
+
+        
     
