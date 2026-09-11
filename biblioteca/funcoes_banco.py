@@ -404,6 +404,7 @@ def devolver_livro(id_livro):
         cursor.close()
         conexao.close()
 
+
                         
 # ==============================================================================
 # OPERAÇÕES DE AUTOR (LISTAR, BUSCAR, CADASTRAR)
@@ -483,4 +484,29 @@ def listar_emprestimos_ativos():
     return emprestimos_ativos
 
         
-    
+def listar_historico_emprestimos():
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary=True)
+    historico = []
+    try:
+        cursor.execute("""
+        select 
+	        emprestimos.id, 
+	        emprestimos.livro_id, 
+            emprestimos.cliente_id,
+            livros.titulo, 
+            clientes.nome as cliente, 
+            emprestimos.data_emprestimo,
+            emprestimos.data_devolutiva 
+        from emprestimos
+        Join livros on emprestimos.livro_id = livros.id
+        Join clientes on emprestimos.cliente_id = clientes.id
+        order by emprestimos.data_emprestimo DESC; 
+    """)
+        historico = cursor.fetchall()
+    except mysql.connector.Error:
+        print('Erro ao executar a operação no Banco de Dados')
+    finally:
+        cursor.close()
+        conexao.close()
+    return historico

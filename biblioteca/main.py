@@ -21,6 +21,7 @@ while True:
     [ 8 ] Cadastrar empréstimo
     [ 9 ] Devolver livro
     [ 10 ] Listar emprestimos ativos
+    [ 11 ] Histórico de empréstimos
     ---------------------------
     [ 0 ] Sair do Sistema
     """)
@@ -229,6 +230,24 @@ while True:
                 print("-" * 40)
         else:
             print('Não há nenhum emprestimo ativo nesse momento')
+
+    # 11 - Listar histórico de emprestimos
+    elif opc == 11:
+        print("\n=== HISTÓRICO DE EMPRESTIMOS ===")
+        print()
+        historico = listar_historico_emprestimos()
+        if historico:
+            for emprestado in historico:
+                print(f"ID Emprestimo: {emprestado['id']}")
+                print(f"ID Livro: {emprestado['livro_id']}")
+                print(f"ID Cliente {emprestado['cliente_id']}")
+                print(f"Titulo: {emprestado['titulo']}")
+                print(f"Cliente: {emprestado['cliente']}")
+                print(f"Data do emprestimo: {emprestado['data_emprestimo']}")
+                print(f"Data de devolução: {emprestado['data_devolutiva']}")
+                linha()
+        else:
+            print('Não há nenhum registro de emprestimo ')
 
     # 0 - SAIR
     elif opc == 0:
