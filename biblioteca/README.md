@@ -1,12 +1,12 @@
-# 📚 Sistema de Gerenciamento de Biblioteca
+# Sistema de Gerenciamento de Biblioteca
 
 Sistema de gerenciamento de biblioteca desenvolvido em **Python**, com integração ao **MySQL**.
 
 O projeto foi desenvolvido para praticar desenvolvimento de software, programação em Python, SQL, operações CRUD, relacionamentos entre entidades e integração entre uma aplicação e um banco de dados relacional.
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-### 👤 Clientes
+### Clientes
 
 * Cadastrar clientes
 * Listar clientes
@@ -16,13 +16,13 @@ O projeto foi desenvolvido para praticar desenvolvimento de software, programaç
 * Atualizar telefone
 * Excluir cliente
 
-### ✍️ Autores
+### Autores
 
 * Cadastrar autores
 * Buscar autores por ID
 * Associar autores aos livros
 
-### 📖 Livros
+### Livros
 
 * Cadastrar livros
 * Listar livros
@@ -30,7 +30,7 @@ O projeto foi desenvolvido para praticar desenvolvimento de software, programaç
 * Associar livros aos autores
 * Verificar disponibilidade de livros para empréstimo
 
-### 🔄 Empréstimos
+### Empréstimos
 
 * Registrar empréstimos
 * Registrar devoluções
@@ -38,7 +38,7 @@ O projeto foi desenvolvido para praticar desenvolvimento de software, programaç
 * Consultar histórico de empréstimos
 * Relacionar livros, clientes e funcionários aos empréstimos
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 * **Python**
 * **MySQL**
@@ -48,7 +48,7 @@ O projeto foi desenvolvido para praticar desenvolvimento de software, programaç
 * **Git**
 * **GitHub**
 
-## 🗄️ Banco de dados
+## Banco de dados
 
 A aplicação utiliza **MySQL** como banco de dados relacional.
 
@@ -62,7 +62,7 @@ O sistema trabalha com entidades como:
 
 As consultas utilizam operações SQL como `SELECT`, `INSERT`, `UPDATE` e `DELETE`, além de `JOIN` para relacionar informações entre diferentes tabelas.
 
-### 🔐 Variáveis de ambiente
+### Variáveis de ambiente
 
 As credenciais do banco de dados são armazenadas em um arquivo `.env`, evitando que informações sensíveis sejam diretamente inseridas no código-fonte.
 
@@ -77,7 +77,7 @@ DB_NAME=biblioteca
 
 > O arquivo `.env` não é versionado pelo Git e está incluído no `.gitignore`.
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```text
 biblioteca/
@@ -107,7 +107,7 @@ Responsável pela conexão com o banco de dados e pelo carregamento das variáve
 **`testes.py`**
 Utilizado durante o desenvolvimento para realizar testes das funções do sistema.
 
-## ⚙️ Como executar
+## Como executar
 
 ### 1. Clone o repositório
 
@@ -162,7 +162,7 @@ DB_NAME=biblioteca
 python main.py
 ```
 
-## 📈 Evolução do projeto
+## Evolução do projeto
 
 O projeto começou utilizando um arquivo **JSON** para armazenar os dados.
 
@@ -178,8 +178,8 @@ Durante o desenvolvimento, a aplicação foi migrada para **MySQL**, permitindo 
 
 Essa evolução também permitiu separar melhor a lógica da aplicação das operações relacionadas ao banco de dados.
 
-## 🎯 Objetivo
+## Objetivo
 
 O projeto tem como objetivo consolidar conhecimentos em **Python, bancos de dados e desenvolvimento de software**, aplicando esses conceitos na construção de uma aplicação funcional de gerenciamento de biblioteca.
 
-> 🚧 Projeto desenvolvido para fins de estudo e portfólio.
+> Projeto desenvolvido para fins de estudo e portfólio.
