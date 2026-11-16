@@ -1,38 +1,44 @@
-# Projetos e Estudos em Python
+# Projetos e estudos em Python
 
-Repositório criado para reunir projetos e estudos desenvolvidos durante minha formação em Tecnologia da Informação, com foco em Python, lógica de programação, banco de dados e desenvolvimento de software.
+Repositório de projetos práticos desenvolvidos durante minha formação em **Sistemas de Informação**, com foco em Python, lógica de programação e integração com bancos de dados.
 
-## Projetos
+## Projeto em destaque
 
-### 📚 Biblioteca
+### [Sistema de Gerenciamento de Biblioteca](./biblioteca)
 
-Aplicação desenvolvida em Python integrada ao MySQL para gerenciamento de uma biblioteca.
+Aplicação em Python integrada ao MySQL para gerenciar clientes, autores, livros e empréstimos.
 
-Principais funcionalidades:
+**O que o projeto pratica**
+- Operações CRUD;
+- Consultas SQL e relacionamentos entre tabelas;
+- Integração de uma aplicação Python com MySQL;
+- Separação entre fluxo principal, lógica da aplicação e acesso a dados;
+- Uso de variáveis de ambiente para configuração.
 
-- Cadastro e gerenciamento de clientes
-- Cadastro de autores e livros
-- Registro e devolução de empréstimos
-- Consulta de empréstimos ativos e histórico
-- Operações CRUD
-- Consultas SQL com relacionamentos entre tabelas
+**Tecnologias:** Python, MySQL, SQL, mysql-connector-python e python-dotenv.
 
-**Tecnologias:** Python, MySQL, SQL, `mysql-connector-python`, `python-dotenv`, Git e GitHub.
+> Projeto de aprendizagem desenvolvido com apoio de ferramentas de IA. O objetivo é consolidar e aprofundar a compreensão da implementação, das decisões técnicas e do código.
 
-[Ver projeto da Biblioteca](./biblioteca)
+## Estrutura
 
-## Tecnologias e conceitos
+```text
+projetos-python/
+└── biblioteca/
+    ├── database.py
+    ├── funcoes.py
+    ├── funcoes_banco.py
+    ├── main.py
+    ├── testes.py
+    ├── requirements.txt
+    └── README.md
+```
 
-- Python
-- SQL
-- MySQL
-- Git e GitHub
-- Programação procedural
-- CRUD
-- Relacionamento entre tabelas
-- Integração entre aplicação e banco de dados
-- Variáveis de ambiente
+Consulte o [README da Biblioteca](./biblioteca/README.md) para conhecer funcionalidades, configuração e execução.
 
-## Objetivo
+## English
 
-Este repositório acompanha minha evolução no desenvolvimento de software, reunindo projetos práticos e estudos realizados ao longo da minha formação em Sistemas de Informação.
+A collection of practical Python projects developed during my Information Systems studies. The main project is a library management application integrated with MySQL, built to practice CRUD operations, relational queries, and database integration.
+
+---
+
+*Repositório de estudos e evolução prática em desenvolvimento de software.*
